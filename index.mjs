@@ -67,6 +67,15 @@ Hash.of(fs.readFileSync("./file"), { cidVersion: 1 })
     process.exit(1)
   })
 
+Hash.of(fs.readFileSync("./file"), { cidVersion: 1, onlyHash: true, rawLeaves: true })
+  .then(($) => {
+    console.log("ipfs-only-hash(fixed):", $ == expectedHashPinata, $)
+  })
+  .catch((err) => {
+    console.error(err)
+    process.exit(1)
+  })
+
 multiformatHash(fs.readFileSync("./file"))
   .then(($) => {
     console.log("@ipld/dag-pb:", $ == expectedHashPinata, $)
